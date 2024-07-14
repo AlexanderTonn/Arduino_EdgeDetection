@@ -5,15 +5,20 @@ Arduino Library for detecting rising of falling edges of signals
 
 #include "edgeDetection.hpp"
 
-EdgeDetection<bool> _edgeDetect1;
-EdgeDetection<int> _edgeDetect2;
+EdgeDetection<bool> _trig
 
-void setuo(){
-
+void setup(){
+    Serial.begin(9600);
 }
 
 void loop(){
+    bool exampleSignal = true;
 
+    // This will return true only once in the first loop (because exampleSignal is never changing)
+    auto booleanSignal = _trig.edgeDetection(timer, EdgeDetection<bool>::type::RISING_EDGE, true)
+    if(booleanSignal){
+        Serial.println("Rising edge detected");
+    }
 }
 
 
