@@ -20,6 +20,7 @@ public:
     template <typename T1, typename T2>
     auto edgeDetection(T1 TinputSignal, EdgeDetection::type _type, T2 Ttrigger) -> bool
     {
+        bool ret = false;
         // RISING EDGE detection
         switch (_type)
         {
@@ -27,37 +28,37 @@ public:
             if (TinputSignal >= Ttrigger && mPrevSignal < Ttrigger)
             {
                 mPrevSignal = TinputSignal;
-                return true;
+                ret = true;
             }
             // Resetting the signal if Ttrigger was reached
             else if ((TinputSignal >= Ttrigger && mPrevSignal >= Ttrigger) || (TinputSignal < Ttrigger && mPrevSignal >= Ttrigger))
             {
                 mPrevSignal = TinputSignal;
-                return false;
+                ret = false;
             }
             else
-                return false;
+                ret = false;
             break;
 
         case EdgeDetection::type::FALLING_EDGE:
             if (TinputSignal <= Ttrigger && mPrevSignal > Ttrigger)
             {
                 mPrevSignal = TinputSignal;
-                return true;
+                ret = true;
             }
             else if ((TinputSignal <= Ttrigger && mPrevSignal <= Ttrigger) || (TinputSignal > Ttrigger && mPrevSignal <= Ttrigger))
             {
                 mPrevSignal = TinputSignal;
-                return false;
+                ret = false;
             }
             else
-                return false;
+                ret = false;
             break;
 
         default:
-            Serial.println("Error: No edge type defined");
             break;
         }
+        return ret;
     }
 
 private:
